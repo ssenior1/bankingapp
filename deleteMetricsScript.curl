@@ -1,0 +1,36 @@
+curl https://api.truesight.bmc.com/v1/metrics/SAN_FRANCISCO
+-X DELETE -u samuelsenior1@gmail.com:d710abf1-5bae-4159-bafd-440401fc56d5
+-H "Content-Type: application/json" -d '
+{
+   "removeAlarms": true
+}'
+
+
+curl https://api.truesight.bmc.com/v1/metrics/SAN_JOSE
+-X DELETE -u samuelsenior1@gmail.com:d710abf1-5bae-4159-bafd-440401fc56d5
+-H "Content-Type: application/json" -d '
+{
+   "removeAlarms": true
+}'
+
+
+curl https://api.truesight.bmc.com/v1/metrics/LAS_VEGAS
+-X DELETE -u samuelsenior1@gmail.com:d710abf1-5bae-4159-bafd-440401fc56d5
+-H "Content-Type: application/json" -d '
+{
+   "removeAlarms": true
+}'
+
+curl https://api.truesight.bmc.com/v1/metrics/HOUSTON
+-X DELETE -u samuelsenior1@gmail.com:d710abf1-5bae-4159-bafd-440401fc56d5
+-H "Content-Type: application/json" -d '
+{
+   "removeAlarms": true
+}'
+
+curl https://api.truesight.bmc.com/v1/metrics/SANTA_CLARA
+-X DELETE -u samuelsenior1@gmail.com:d710abf1-5bae-4159-bafd-440401fc56d5
+-H "Content-Type: application/json" -d '
+{
+   "removeAlarms": true
+}'

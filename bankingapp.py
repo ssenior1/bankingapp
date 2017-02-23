@@ -1,0 +1,50 @@
+import sendmeasurements as sm
+import sendevents as se
+import abnormalerrorsetutilities
+import definemetrics as dm
+import time
+import random
+import argparse
+import _thread
+
+# Help for the CLI
+parser = argparse.ArgumentParser(description='Sample integration with TrueSight Intelligence')
+parser.add_argument('--email', help='Your TrueSight Intelligence account email', required=True)
+parser.add_argument('--api', help='Your TrueSight Intelligence API token', required=True)
+parser.add_argument('--freq', help='Polling frequency, defaults to 10 secs', default=10)
+
+# get the values passed via CLI
+args = parser.parse_args()
+userName = args.email
+apiToken = args.api
+pollingFrequency = args.freq
+
+# Metadata definition for the metrics, this will create the metric definitions
+# if they do not exist
+dm.defineAllMetrics(userName, apiToken)
+
+timeOfLastStandardError = time.time()
+standardErrorInterval = 0
+
+abnormalErrorSetInterval = random.randint(60, 120)
+timeOfLastAbnormalErrorSet = time.time()
+
+# Live action - push random errors in an ongoing basis
+# at random intervals, also start sending consistent error messages (still with the random errors at the same speed)
+
+while True:
+    # Measurement data for the login issues
+
+    if time.time() >= (timeOfLastStandardError + standardErrorInterval):
+        eventDict = se.postEvent(userName, apiToken, False)
+        timeOfLastStandardError = time.time()
+        standardErrorInterval = random.uniform(10, 30)
+        sm.sendMeasurements(userName, apiToken, eventDict)
+
+    if time.time() >= (timeOfLastAbnormalErrorSet + abnormalErrorSetInterval):
+        timeOfLastAbnormalErrorSet = time.time()
+        abnormalErrorSetInterval = random.randint(3600, 5000)
+        _thread.start_new_thread(abnormalerrorsetutilities.CreateAbnormalErrorSet, (userName, apiToken, True))
+
+
+
