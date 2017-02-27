@@ -22,7 +22,7 @@ pollingFrequency = args.freq
 
 # Metadata definition for the metrics, this will create the metric definitions
 # if they do not exist
-# dm.defineAllMetrics(userName, apiToken)
+dm.defineAllMetrics(userName, apiToken)
 
 NON_CONSISTENT_ERROR_TYPE = 0
 
