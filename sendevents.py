@@ -11,14 +11,9 @@ import random
 EVENT_SEND_URL = "https://api.truesight.bmc.com/v1/events"
 HEADERS = {'Content-Type': 'application/json'}
 
-def postEvent(userName, apiToken, createError):
+def postEvent(userName, apiToken, overallErrorClass, elementInErrorClassArray):
 
-    if createError:
-        errorType = random.randint(1,3)
-        eventDict = randomdata.getEventInfo(errorType)
-    else:
-        eventDict = randomdata.getEventInfo(0)
-
+    eventDict = randomdata.getEventInfo(overallErrorClass, elementInErrorClassArray)
     _thread.start_new_thread(multiThreadedPost, (eventDict, userName, apiToken))
 
     return eventDict

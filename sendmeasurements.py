@@ -3,6 +3,7 @@
 import requests
 import json
 import time
+import random
 import randomdata
 import _thread
 
@@ -10,34 +11,41 @@ import _thread
 MEASURES_ADD_URL = "https://api.truesight.bmc.com/v1/measurements"
 HEADERS = {'Content-Type': 'application/json'}
 
+START_TIME = time.time()
+counter = 0
 
-def sendMeasurements(userName, apiToken, eventDict):
-    currentTime = round(time.time())
 
-    location_dict = getMeasureDict("Total numberof login issues", "Login issue", currentTime)
+def sendMeasurements(userName, apiToken, eventDict, numberOfErrors):
+    global counter
+
+    # currentTime = START_TIME - (60 * counter)
+
+    location_dict = getMeasureDict("Total_login_issues", "Login issue", numberOfErrors)
     _thread.start_new_thread(multiThreadedPostMeasures, (location_dict, userName, apiToken))
 
-    location_dict = getMeasureDict(eventDict["properties"]["customer_location"], "Login issue", currentTime)
+    location_dict = getMeasureDict(eventDict["properties"]["customer_location"], "Login issue",numberOfErrors)
     _thread.start_new_thread(multiThreadedPostMeasures, (location_dict, userName, apiToken))
 
-    web_portal_dict = getMeasureDict(eventDict["properties"]["web_portal_name"], "Login issue", currentTime)
+    web_portal_dict = getMeasureDict(eventDict["properties"]["web_portal_name"], "Login issue", numberOfErrors)
     _thread.start_new_thread(multiThreadedPostMeasures, (web_portal_dict, userName, apiToken))
 
-    operating_system_dict = getMeasureDict(eventDict["properties"]["operating_system"], "Login issue", currentTime)
+    operating_system_dict = getMeasureDict(eventDict["properties"]["operating_system"], "Login issue", numberOfErrors)
     _thread.start_new_thread(multiThreadedPostMeasures, (operating_system_dict, userName, apiToken))
 
-    browser_dict = getMeasureDict(eventDict["properties"]["browser"], "Login issue", currentTime)
+    browser_dict = getMeasureDict(eventDict["properties"]["browser"], "Login issue", numberOfErrors)
     _thread.start_new_thread(multiThreadedPostMeasures, (browser_dict, userName, apiToken))
 
+    counter += 1
 
-def getMeasureDict(metricName, sourceName, timeStamp):
+
+def getMeasureDict(metricName, sourceName, numberOfErrors):
     measurement_dict = {
         "source" : sourceName,
         "metric" : metricName,
-        "measure" : 1,
-        "timestamp" : timeStamp,
+        "measure" : numberOfErrors,
+        "timestamp" : time.time(),
         "metadata" : {
-            "app_id" : "BANKING PORTAL"
+            "app_id" : "BANK PORTALS"
         }
     }
     return measurement_dict

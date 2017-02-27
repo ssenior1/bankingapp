@@ -21,12 +21,14 @@ pollingFrequency = args.freq
 
 # Metadata definition for the metrics, this will create the metric definitions
 # if they do not exist
-dm.defineAllMetrics(userName, apiToken)
+# dm.defineAllMetrics(userName, apiToken)
+
+NON_CONSISTENT_ERROR_TYPE = 0
 
 timeOfLastStandardError = time.time()
 standardErrorInterval = 0
 
-abnormalErrorSetInterval = random.randint(60, 120)
+abnormalErrorSetInterval = random.randint(1, 3)
 timeOfLastAbnormalErrorSet = time.time()
 
 # Live action - push random errors in an ongoing basis
@@ -36,15 +38,16 @@ while True:
     # Measurement data for the login issues
 
     if time.time() >= (timeOfLastStandardError + standardErrorInterval):
-        eventDict = se.postEvent(userName, apiToken, False)
+        eventDict = se.postEvent(userName, apiToken, NON_CONSISTENT_ERROR_TYPE, 0)
         timeOfLastStandardError = time.time()
         standardErrorInterval = random.uniform(10, 30)
-        sm.sendMeasurements(userName, apiToken, eventDict)
+        numberOfErrors = random.randint(1, 5)
+        sm.sendMeasurements(userName, apiToken, eventDict, numberOfErrors)
 
     if time.time() >= (timeOfLastAbnormalErrorSet + abnormalErrorSetInterval):
         timeOfLastAbnormalErrorSet = time.time()
-        abnormalErrorSetInterval = random.randint(3600, 5000)
-        _thread.start_new_thread(abnormalerrorsetutilities.CreateAbnormalErrorSet, (userName, apiToken, True))
+        abnormalErrorSetInterval = random.randint(3600, 172800)
+        _thread.start_new_thread(abnormalerrorsetutilities.CreateAbnormalErrorSet, (userName, apiToken))
 
 
 
