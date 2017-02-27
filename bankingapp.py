@@ -44,13 +44,16 @@ while True:
     createdAt = GetTime.getTime()
     eventDict = se.postEvent(userName, apiToken, NON_CONSISTENT_ERROR_TYPE, 0, createdAt)
     sm.sendMeasurements(userName, apiToken, eventDict, numberOfErrors, createdAt)
-
-    if counter == random.randint(600, 1000):
-        _thread.start_new_thread(abnormalerrorsetutilities.CreateAbnormalErrorSet, (userName, apiToken))
-        counter = 0
-
     counter += 1
 
+    if counter == random.randint(3600, 172800):
+        _thread.start_new_thread(abnormalerrorsetutilities.CreateAbnormalErrorSet, (userName, apiToken))
+        # print for testing purposes
+        print ("The count is: " + str(counter))
+        counter = 0
+
+
+# Previous way of setting timing for errors - moved to counter for further simplicity.
 
 # if time.time() >= (timeOfLastStandardError + standardErrorInterval):
     #     createdAt = GetTime.getTime()
