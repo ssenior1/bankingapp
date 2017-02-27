@@ -1,6 +1,7 @@
 import random
 import datetime
 import time
+import GetTime
 
 class Customer:
     location = ['San_Francisco', 'San_Jose', 'Las_Vegas', 'Houston', 'Santa_Clara']
@@ -48,9 +49,9 @@ def setUsageAttributes(overallErrorClass, elementInErrorClassArray):
     return usageDetails
 
 
-def getEventInfo(overallErrorClass, elementInErrorClassArray):
+def getEventInfo(overallErrorClass, elementInErrorClassArray, createdAt):
 
-    global counter
+    # global counter
 
     usageDetails = setUsageAttributes(overallErrorClass, elementInErrorClassArray)
     customer = setCustomerAttributes(overallErrorClass, elementInErrorClassArray)
@@ -68,7 +69,7 @@ def getEventInfo(overallErrorClass, elementInErrorClassArray):
         "title": "Login issue for " + usageDetails.webPortalName + " by customer using " +
                  usageDetails.operatingSystem + " running " + usageDetails.browser + " located in "
             + customer.location,
-        "createdAt":  time.time(),
+        "createdAt":  createdAt,
         "eventClass": "Login_Issue_Metrics",
         "properties" : {
             "app_id": "BANK PORTALS",
@@ -79,6 +80,6 @@ def getEventInfo(overallErrorClass, elementInErrorClassArray):
         }
     }
 
-    counter += 1
+    # counter += 1
 
     return eventvalues
