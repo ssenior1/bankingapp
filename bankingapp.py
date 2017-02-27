@@ -7,6 +7,7 @@ import random
 import argparse
 import _thread
 import GetTime
+import getandsetabornmalissueintervals
 
 # Help for the CLI
 parser = argparse.ArgumentParser(description='Sample integration with TrueSight Intelligence')
@@ -22,34 +23,33 @@ pollingFrequency = args.freq
 
 # Metadata definition for the metrics, this will create the metric definitions
 # if they do not exist
-dm.defineAllMetrics(userName, apiToken)
+# dm.defineAllMetrics(userName, apiToken)
 
 NON_CONSISTENT_ERROR_TYPE = 0
 
 # timeOfLastStandardError = time.time()
 # standardErrorInterval = 0
-#
 # abnormalErrorSetInterval = random.randint(1, 3)
 # timeOfLastAbnormalErrorSet = time.time()
 
 numberOfErrors = random.randint(1, 5)
-counter = 0
 
 # Live action - push random errors in an ongoing basis
 # at random intervals, also start sending consistent error messages (still with the random errors at the same speed)
+counter = 0
 
 while True:
-    # Measurement data for the login issues
-
     createdAt = GetTime.getTime()
-    eventDict = se.postEvent(userName, apiToken, NON_CONSISTENT_ERROR_TYPE, 0, createdAt)
+
+    for i in range(numberOfErrors):
+        eventDict = se.postEvent(userName, apiToken, NON_CONSISTENT_ERROR_TYPE, 0, createdAt)
     sm.sendMeasurements(userName, apiToken, eventDict, numberOfErrors, createdAt)
     counter += 1
 
-    if counter == random.randint(3600, 172800):
+# if the abnormality interval is the same as the number of errors sent so far, start sending abnormal errors
+    if (getandsetabornmalissueintervals.getIntervalForAbnormalIssues()) / counter == 1:
         _thread.start_new_thread(abnormalerrorsetutilities.CreateAbnormalErrorSet, (userName, apiToken))
-        # print for testing purposes
-        print ("The count is: " + str(counter))
+        getandsetabornmalissueintervals.setNewIntervalForAbnormalIssues()
         counter = 0
 
 

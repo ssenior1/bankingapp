@@ -17,8 +17,6 @@ counter = 0
 def sendMeasurements(userName, apiToken, eventDict, numberOfErrors, createdAt):
     global counter
 
-    # currentTime = START_TIME - (60 * counter)
-
     location_dict = getMeasureDict("Total_login_issues", "Login issue", numberOfErrors, createdAt)
     _thread.start_new_thread(multiThreadedPostMeasures, (location_dict, userName, apiToken))
 
@@ -35,6 +33,7 @@ def sendMeasurements(userName, apiToken, eventDict, numberOfErrors, createdAt):
     _thread.start_new_thread(multiThreadedPostMeasures, (browser_dict, userName, apiToken))
 
     counter += 1
+    return counter
 
 
 def getMeasureDict(metricName, sourceName, numberOfErrors, createdAt):
