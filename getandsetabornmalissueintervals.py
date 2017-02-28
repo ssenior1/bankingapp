@@ -1,6 +1,6 @@
 import random
 
-interval = random.randint(20, 40)
+interval = random.randint(60, 2500)
 
 def getIntervalForAbnormalIssues():
     global interval
@@ -8,4 +8,4 @@ def getIntervalForAbnormalIssues():
 
 def setNewIntervalForAbnormalIssues():
     global interval
-    interval = random.randint(20, 40)
+    interval = random.randint(60, 2500)
