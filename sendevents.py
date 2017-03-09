@@ -15,13 +15,14 @@ HEADERS = {'Content-Type': 'application/json'}
 def postEvent(userName, apiToken, overallErrorClass, elementInErrorClassArray, createdAt):
 
     eventDict = randomdata.getEventInfo(overallErrorClass, elementInErrorClassArray, createdAt)
+    sendEvent(eventDict, userName, apiToken)
 
-    _thread.start_new_thread(multiThreadedPost, (eventDict, userName, apiToken))
+
+    # _thread.start_new_thread(multiThreadedPost, (eventDict, userName, apiToken))
 
     return eventDict
 
-
-def multiThreadedPost (eventDict, userName, apiToken):
+def sendEvent(eventDict, userName, apiToken):
     response = requests.post(EVENT_SEND_URL,
         auth=(userName, apiToken), data=json.dumps(eventDict), headers=HEADERS)
     if response.status_code == requests.codes.ok or response.status_code == requests.codes.accepted:
@@ -33,3 +34,17 @@ def multiThreadedPost (eventDict, userName, apiToken):
         print("Unable to send event " + eventDict["title"] +
             " for source " + eventDict["source"]["ref"] + " @ time:" +
             str(eventDict["createdAt"]) + " Error code:" + str(response.status_code))
+
+
+# def multiThreadedPost (eventDict, userName, apiToken):
+#     response = requests.post(EVENT_SEND_URL,
+#         auth=(userName, apiToken), data=json.dumps(eventDict), headers=HEADERS)
+#     if response.status_code == requests.codes.ok or response.status_code == requests.codes.accepted:
+#         print("Successfully sent event " + eventDict["title"] +
+#             " for source " + eventDict["source"]["ref"] + " @ time:" +
+#             str(eventDict["createdAt"]))
+#
+#     else:
+#         print("Unable to send event " + eventDict["title"] +
+#             " for source " + eventDict["source"]["ref"] + " @ time:" +
+#             str(eventDict["createdAt"]) + " Error code:" + str(response.status_code))

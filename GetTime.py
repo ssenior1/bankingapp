@@ -3,7 +3,7 @@ from datetime import timedelta
 import time
 
 counter = 0
-start_time = time.time() - timedelta(days=60).total_seconds()
+start_time = time.time() - timedelta(days=290).total_seconds()
 
 def getTime():
     global counter
