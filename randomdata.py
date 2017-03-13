@@ -51,8 +51,6 @@ def setUsageAttributes(overallErrorClass, elementInErrorClassArray):
 
 def getEventInfo(overallErrorClass, elementInErrorClassArray, createdAt):
 
-    # global counter
-
     usageDetails = setUsageAttributes(overallErrorClass, elementInErrorClassArray)
     customer = setCustomerAttributes(overallErrorClass, elementInErrorClassArray)
 

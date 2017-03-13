@@ -22,7 +22,7 @@ pollingFrequency = args.freq
 
 # Metadata definition for the metrics, this will create the metric definitions
 # if they do not exist
-# dm.defineAllMetrics(userName, apiToken)
+dm.defineAllMetrics(userName, apiToken)
 
 NON_CONSISTENT_ERROR_TYPE = 0
 
@@ -34,16 +34,28 @@ while True:
     createdAt = GetTime.getTime()
     numberOfErrors = random.randint(1, 7)
     for i in range(numberOfErrors):
-        eventDict = se.postEvent(userName, apiToken, NON_CONSISTENT_ERROR_TYPE, 0, createdAt)
+        eventDict = se.postEvent(userName, apiToken, NON_CONSISTENT_ERROR_TYPE, NON_CONSISTENT_ERROR_TYPE, createdAt)
         sm.sendMeasurements(userName, apiToken, eventDict, numberOfErrors, createdAt)
-    counter += 1
+        print(str(counter))
+        counter += 1
+
+
+# Commented out the abnormal issues section of the code during testing to make sure normal events hit the API
+#
+#
+#
+#
+#
+#
+
+    # counter += 1
 
 # if the abnormality interval is the same as the number of errors sent so far, start sending abnormal errors
-    if (getandsetabornmalissueintervals.getIntervalForAbnormalIssues()) / counter == 1:
-        abnormalerrorsetutilities.CreateAbnormalErrorSet(userName, apiToken)
-        # _thread.start_new_thread(abnormalerrorsetutilities.CreateAbnormalErrorSet, (userName, apiToken))
-        getandsetabornmalissueintervals.setNewIntervalForAbnormalIssues()
-        counter = 0
+#     if (getandsetabornmalissueintervals.getIntervalForAbnormalIssues()) / counter == 1:
+        # abnormalerrorsetutilities.CreateAbnormalErrorSet(userName, apiToken)
+        # # _thread.start_new_thread(abnormalerrorsetutilities.CreateAbnormalErrorSet, (userName, apiToken))
+        # getandsetabornmalissueintervals.setNewIntervalForAbnormalIssues()
+        # counter = 0
 
 
 # Previous way of setting timing for errors - moved to counter for further simplicity.

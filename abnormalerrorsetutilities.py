@@ -9,7 +9,7 @@ EVENT_SEND_URL = "https://api.truesight.bmc.com/v1/events"
 HEADERS = {'Content-Type': 'application/json'}
 
 def CreateAbnormalErrorSet(userName, apiToken):
-    minutesOfConsistentErrors = random.randint(30, 90)
+    minutesOfConsistentErrors = random.randint(15, 25)
 
     overallErrorClass = random.randint(1, 4)
     elementInErrorClassArray = random.randint(0, 4)
@@ -17,14 +17,18 @@ def CreateAbnormalErrorSet(userName, apiToken):
     for i in range(minutesOfConsistentErrors):
 
         createdAt = GetTime.getTime()
-        avgNumberOfErrorsPerMinute = random.randint(20, 60)
+        avgNumberOfErrorsPerMinute = random.randint(10, 30)
 
         for j in range(avgNumberOfErrorsPerMinute):
             eventDict = se.postEvent(userName, apiToken, overallErrorClass, elementInErrorClassArray, createdAt)
+            sm.sendMeasurements(userName, apiToken, eventDict, avgNumberOfErrorsPerMinute, createdAt)
 
-        sm.sendMeasurements(userName, apiToken, eventDict, avgNumberOfErrorsPerMinute, createdAt)
-
-
+# Commented out all the multi-threading during inital stages to make sure everything is working
+#
+#
+#
+#
+#
 
     # while numberOfEventsSent <= minutesOfConsistentErrors:
     #
@@ -44,4 +48,4 @@ def CreateAbnormalErrorSet(userName, apiToken):
         #
         #     sm.sendMeasurements(userName, apiToken, eventDict, avgNumberOfErrorsPerMinute, createdAt)
 
-    _thread.exit()
+    # _thread.exit()

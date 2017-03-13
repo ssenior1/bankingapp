@@ -4,7 +4,7 @@ import time
 import random
 
 counter = 0
-start_time = time.time() - timedelta(days=350).total_seconds()
+start_time = time.time() - timedelta(days=330).total_seconds()
 
 def getTime():
     global counter

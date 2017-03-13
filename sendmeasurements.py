@@ -64,6 +64,12 @@ def postMeasures(measureDict, userName, apiToken):
             " for source " + measureDict["source"] + " @ time:" +
             str(measureDict["timestamp"]) + " Error code:" + str(response.status_code))
 
+# Commented out all the multi-threading during inital stages to make sure everything is working
+#
+#
+#
+#
+#
 
 # def multiThreadedPostMeasures(measureDict, userName, apiToken):
 #     response = requests.post(MEASURES_ADD_URL,

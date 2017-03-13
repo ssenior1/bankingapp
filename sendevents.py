@@ -6,8 +6,6 @@ import time
 import randomdata
 import _thread
 
-
-
 # api endpoint
 EVENT_SEND_URL = "https://api.truesight.bmc.com/v1/events"
 HEADERS = {'Content-Type': 'application/json'}
@@ -16,7 +14,6 @@ def postEvent(userName, apiToken, overallErrorClass, elementInErrorClassArray, c
 
     eventDict = randomdata.getEventInfo(overallErrorClass, elementInErrorClassArray, createdAt)
     sendEvent(eventDict, userName, apiToken)
-
 
     # _thread.start_new_thread(multiThreadedPost, (eventDict, userName, apiToken))
 
@@ -35,6 +32,12 @@ def sendEvent(eventDict, userName, apiToken):
             " for source " + eventDict["source"]["ref"] + " @ time:" +
             str(eventDict["createdAt"]) + " Error code:" + str(response.status_code))
 
+# Commented out all the multi-threading during inital stages to make sure everything is working
+#
+#
+#
+#
+#
 
 # def multiThreadedPost (eventDict, userName, apiToken):
 #     response = requests.post(EVENT_SEND_URL,
