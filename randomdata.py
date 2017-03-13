@@ -2,6 +2,7 @@ import random
 import datetime
 import time
 import GetTime
+import uuid
 
 class Customer:
     location = ['San_Francisco', 'San_Jose', 'Las_Vegas', 'Houston', 'Santa_Clara']
@@ -54,11 +55,9 @@ def getEventInfo(overallErrorClass, elementInErrorClassArray, createdAt):
     usageDetails = setUsageAttributes(overallErrorClass, elementInErrorClassArray)
     customer = setCustomerAttributes(overallErrorClass, elementInErrorClassArray)
 
-    # currentTime = START_TIME - (60 * counter)
-
     eventvalues = {
         "fingerprintFields": [
-            "@title", "@createdAt"
+            "@title"
         ],
         "source": {
             "ref": "Login issue",
@@ -75,9 +74,8 @@ def getEventInfo(overallErrorClass, elementInErrorClassArray, createdAt):
             "operating_system" : usageDetails.operatingSystem,
             "browser" : usageDetails.browser,
             "customer_location" : customer.location,
+            "uid" : str(uuid.uuid1())
         }
     }
-
-    # counter += 1
 
     return eventvalues
