@@ -1,6 +1,6 @@
 import random
 
-interval = random.randint(40, 100)
+interval = random.randint(200, 6000)
 print("Number of events before abnormal events start will be: " + str(interval))
 
 def getIntervalForAbnormalIssues():
@@ -9,4 +9,4 @@ def getIntervalForAbnormalIssues():
 
 def setNewIntervalForAbnormalIssues():
     global interval
-    interval = random.randint(60, 2500)
+    interval = random.randint(200, 6000)

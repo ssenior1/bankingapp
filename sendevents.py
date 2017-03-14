@@ -25,7 +25,7 @@ def sendEvent(eventDict, userName, apiToken):
     if response.status_code == requests.codes.ok or response.status_code == requests.codes.accepted:
         print("Successfully sent event " + eventDict["title"] +
             " for source " + eventDict["source"]["ref"] + " @ time:" +
-            str(eventDict["createdAt"]))
+            str(eventDict["createdAt"]) + " UID of " + eventDict["properties"]["uid"])
 
     else:
         print("Unable to send event " + eventDict["title"] +

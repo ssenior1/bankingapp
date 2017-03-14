@@ -9,7 +9,7 @@ EVENT_SEND_URL = "https://api.truesight.bmc.com/v1/events"
 HEADERS = {'Content-Type': 'application/json'}
 
 def CreateAbnormalErrorSet(userName, apiToken):
-    minutesOfConsistentErrors = random.randint(15, 25)
+    minutesOfConsistentErrors = random.randint(15, 90)
 
     overallErrorClass = random.randint(1, 4)
     elementInErrorClassArray = random.randint(0, 4)
@@ -17,7 +17,7 @@ def CreateAbnormalErrorSet(userName, apiToken):
     for i in range(minutesOfConsistentErrors):
 
         createdAt = GetTime.getTime()
-        avgNumberOfErrorsPerMinute = random.randint(10, 30)
+        avgNumberOfErrorsPerMinute = random.randint(10, 25)
 
         for j in range(avgNumberOfErrorsPerMinute):
             eventDict = se.postEvent(userName, apiToken, overallErrorClass, elementInErrorClassArray, createdAt)

@@ -29,10 +29,11 @@ NON_CONSISTENT_ERROR_TYPE = 0
 # Live action - push random errors in an ongoing basis
 # at random intervals, also start sending consistent error messages (still with the random errors at the same speed)
 counter = 0
+total_error_counter = 0
 
 while True:
     createdAt = GetTime.getTime()
-    numberOfErrors = random.randint(1, 7)
+    numberOfErrors = random.randint(1, 4)
     for i in range(numberOfErrors):
         eventDict = se.postEvent(userName, apiToken, NON_CONSISTENT_ERROR_TYPE, NON_CONSISTENT_ERROR_TYPE, createdAt)
         sm.sendMeasurements(userName, apiToken, eventDict, numberOfErrors, createdAt)
@@ -48,14 +49,14 @@ while True:
 #
 #
 
-    # counter += 1
+    total_error_counter += 1
 
 # if the abnormality interval is the same as the number of errors sent so far, start sending abnormal errors
-#     if (getandsetabornmalissueintervals.getIntervalForAbnormalIssues()) / counter == 1:
-        # abnormalerrorsetutilities.CreateAbnormalErrorSet(userName, apiToken)
-        # # _thread.start_new_thread(abnormalerrorsetutilities.CreateAbnormalErrorSet, (userName, apiToken))
-        # getandsetabornmalissueintervals.setNewIntervalForAbnormalIssues()
-        # counter = 0
+    if (getandsetabornmalissueintervals.getIntervalForAbnormalIssues()) / total_error_counter == 1:
+        abnormalerrorsetutilities.CreateAbnormalErrorSet(userName, apiToken)
+        # _thread.start_new_thread(abnormalerrorsetutilities.CreateAbnormalErrorSet, (userName, apiToken))
+        getandsetabornmalissueintervals.setNewIntervalForAbnormalIssues()
+        total_error_counter = 0
 
 
 # Previous way of setting timing for errors - moved to counter for further simplicity.

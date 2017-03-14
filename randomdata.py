@@ -57,7 +57,7 @@ def getEventInfo(overallErrorClass, elementInErrorClassArray, createdAt):
 
     eventvalues = {
         "fingerprintFields": [
-            "@title"
+            "@title", "uid"
         ],
         "source": {
             "ref": "Login issue",
@@ -74,7 +74,7 @@ def getEventInfo(overallErrorClass, elementInErrorClassArray, createdAt):
             "operating_system" : usageDetails.operatingSystem,
             "browser" : usageDetails.browser,
             "customer_location" : customer.location,
-            "uid" : str(uuid.uuid1())
+            "uid" : str(uuid.uuid1()),
         }
     }
 
